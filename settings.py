@@ -4,7 +4,7 @@ class Settings():
     def __init__(self):
 
         # Screen settings
-        self.screen_width = 1220
+        self.screen_width = 1280
         self.screen_height = 800
         self.bg_color = (220, 220, 220)
 
@@ -17,3 +17,10 @@ class Settings():
         self.bullet_height = 15
         self.bullet_color = 204, 0, 102
         self.bullets_allowed = 3
+
+        # Super Bullets settings
+        self.super_bullet_speed = 1.8
+        self.super_bullet_width = 8
+        self.super_bullet_height = 12
+        self.super_bullet_color = 204, 0, 102
+        self.super_bullets_allowed = 1
