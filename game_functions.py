@@ -38,12 +38,12 @@ def check_events(eafm_settings, screen, warship, bullets):
 def update_screen(eafm_settings, screen, warship, bullets, aliens):
     screen.fill(eafm_settings.bg_color)
 
-    for bullet in bullets.sprites():
-        bullet.draw_bullet()
-
     warship.blitme()
 
     aliens.draw(screen)
+
+    for bullet in bullets.sprites():
+        bullet.draw_bullet()
 
     pygame.display.flip()
 
@@ -62,18 +62,35 @@ def update_bullets(bullets):
             bullets.remove(bullet)
 
 
+#Functions to create aliens fleet
+def create_fleet(eafm_settings, screen, warship, aliens):
+    alien = Alien(eafm_settings, screen)
+    number_aliens = get_number_aliens(eafm_settings, alien.rect.width)
+    number_rows = get_number_rows(eafm_settings, warship.rect.height, alien.rect.height) - 1
 
-def create_fleet(eafm_settings, screen, aliens):
+    # Create the alien fleet
+    for row_number in range(number_rows):
+        for alien_number in range(number_aliens):
+            create_alien(eafm_settings, screen, aliens, alien_number, number_rows)
+
+
+def create_alien(eafm_settings, screen, aliens, alien_number, row_number):
     alien = Alien(eafm_settings, screen)
     alien_width = alien.rect.width
 
+    alien.x = alien_width + 2 * alien_width * alien_number
+    alien.rect.x = alien.x
+    alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+    aliens.add(alien)
+
+
+def get_number_aliens(eafm_settings,alien_width):
     # Determine the available space on screen adn the numbers of aliens that fit it
     available_space = eafm_settings.screen_width - 2 * alien_width
     number_aliens = int(available_space / (2 * alien_width))
+    return number_aliens
 
-    # Create the alien fleet
-    for alien_number in range(number_aliens):
-        alien = Alien(eafm_settings, screen)
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        aliens.add(alien)
+def get_number_rows(eafm_settings, warship_height, alien_height):
+    available_space_vertical = (eafm_settings.screen_height - (3 * alien_height) - warship_height)
+    number_rows = int(available_space_vertical / (2 * alien_height))
+    return number_rows

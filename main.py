@@ -20,7 +20,7 @@ def run_game():
     #EAFM group
     aliens = Group()
 
-    gf.create_fleet(eafm_settings, screen, aliens)
+    gf.create_fleet(eafm_settings, screen, warship, aliens)
 
     while True:
         gf.check_events(eafm_settings, screen, warship, bullets)
