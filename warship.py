@@ -10,7 +10,7 @@ class Warship():
         self.warship_speed = eafm_settings.warship_speed
 
         #load the ship image and get its rect
-        self.image = pygame.image.load('imgs/rocket-warship.bmp')
+        self.image = pygame.image.load('imgs/warship01.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
