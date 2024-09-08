@@ -29,7 +29,7 @@ def run_game():
         warship.update()
         bullets.update()
         special_bullets.update()
-        gf.update_bullets(bullets, special_bullets, aliens)
+        gf.update_bullets(eafm_settings, screen, warship, bullets, special_bullets, aliens)
         gf.update_aliens(eafm_settings,aliens)
         gf.update_screen(eafm_settings,screen,warship, bullets, special_bullets, aliens)
 

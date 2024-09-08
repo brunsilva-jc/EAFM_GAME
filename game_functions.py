@@ -78,7 +78,7 @@ def fire_special_bullets(eafm_settings, screen, warship, special_bullets):
         special_bullets.add(new_bullet)
 
 
-def update_bullets(bullets, special_bullets, aliens):
+def update_bullets(eafm_settings, screen , warship, bullets, special_bullets, aliens):
     # deleting bullets that disappeared
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
@@ -90,6 +90,11 @@ def update_bullets(bullets, special_bullets, aliens):
 
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     collisions2 = pygame.sprite.groupcollide(special_bullets, aliens, False, True)
+
+    if len(aliens) == 0:
+        bullets.empty()
+        special_bullets.empty()
+        create_fleet(eafm_settings, screen, warship, aliens)
 
 def get_number_aliens(eafm_settings,alien_width):
     # Determine the available space on screen and the numbers of aliens that fit it
