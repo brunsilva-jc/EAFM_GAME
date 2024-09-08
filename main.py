@@ -17,16 +17,21 @@ def run_game():
     #Bullets group
     bullets = Group()
 
+    special_bullets = Group()
+
     #EAFM group
     aliens = Group()
 
     gf.create_fleet(eafm_settings, screen, warship, aliens)
 
     while True:
-        gf.check_events(eafm_settings, screen, warship, bullets)
+        gf.check_events(eafm_settings, screen, warship, bullets, special_bullets)
         warship.update()
         bullets.update()
-        gf.update_screen(eafm_settings,screen,warship, bullets, aliens)
-        gf.update_bullets(bullets)
+        special_bullets.update()
+        gf.update_bullets(bullets, special_bullets, aliens)
+        gf.update_aliens(eafm_settings,aliens)
+        gf.update_screen(eafm_settings,screen,warship, bullets, special_bullets, aliens)
+
 
 run_game()

@@ -1,4 +1,4 @@
-class Settings():
+class Settings:
     """ Class with EAFM settings """
 
     def __init__(self):
@@ -11,6 +11,11 @@ class Settings():
         # Warship settings
         self.warship_speed = 1.0
 
+        # Alien settings
+        self.alien_speed_factor = 1
+        self.fleet_drop_speed = 10
+        self.fleet_direction = 1
+
         # Bullet settings
         self.bullet_speed = 1.2
         self.bullet_width = 3
@@ -19,8 +24,8 @@ class Settings():
         self.bullets_allowed = 3
 
         # Super Bullets settings
-        self.super_bullet_speed = 1.8
-        self.super_bullet_width = 8
-        self.super_bullet_height = 12
-        self.super_bullet_color = 204, 0, 102
-        self.super_bullets_allowed = 1
+        self.special_bullet_speed = 1.8
+        self.special_bullet_width = 12
+        self.special_bullet_height = 15
+        self.special_bullet_color = 115, 29, 72
+        self.special_bullets_allowed = 1
