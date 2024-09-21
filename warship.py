@@ -43,3 +43,6 @@ class Warship():
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
+
+    def center_warship(self):
+        self.center = self.screen_rect.centerx

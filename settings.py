@@ -10,6 +10,7 @@ class Settings:
 
         # Warship settings
         self.warship_speed = 1.0
+        self.warship_limit = 5
 
         # Alien settings
         self.alien_speed_factor = 0.8
