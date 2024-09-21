@@ -4,6 +4,7 @@ import pygame
 
 from alien import Alien
 from bullet import Bullet
+from time import sleep
 
 #dict for mapping keys
 movement_directions = {
@@ -14,7 +15,7 @@ movement_directions = {
 }
 
 # WARSHIP ACTION FUNCTIONS
-def check_events(eafm_settings, screen, warship, bullets, special_bullets):
+def check_events(eafm_settings, screen, warship, bullets, special_bullets, stats, button):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -36,9 +37,18 @@ def check_events(eafm_settings, screen, warship, bullets, special_bullets):
         elif event.type == pygame.QUIT:
             sys.exit()
 
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(stats, button, mouse_x, mouse_y)
+
+
+def check_play_button(stats, button, mouse_x, mouse_y):
+    if button.rect.collidepoint(mouse_x, mouse_y):
+        stats.game_active = True
 
 # SCREEN FUNCTIONS
-def update_screen(eafm_settings, screen, warship, bullets, special_bullets, aliens):
+def update_screen(eafm_settings, screen, warship, bullets, special_bullets, aliens, stats,  button):
+
     screen.fill(eafm_settings.bg_color)
 
     warship.blitme()
@@ -50,6 +60,9 @@ def update_screen(eafm_settings, screen, warship, bullets, special_bullets, alie
 
     for special_bullet in  special_bullets.sprites():
         special_bullet.draw_bullet()
+
+    if not stats.game_active:
+        button.draw_button()
 
     pygame.display.flip()
 
@@ -141,6 +154,26 @@ def change_fleet_direction(eafm_settings, aliens):
         alien.rect.y += eafm_settings.fleet_drop_speed
     eafm_settings.fleet_direction *= -1
 
-def update_aliens(eafm_settings, aliens):
+def update_aliens(eafm_settings, warship, aliens, stats, screen, bullets):
     check_fleet_edges(eafm_settings, aliens)
     aliens.update()
+
+    if pygame.sprite.spritecollideany(warship, aliens):
+        warship_hit(eafm_settings, stats, screen, warship, aliens, bullets)
+
+
+def warship_hit(eafm_settings, stats, screen, warship, aliens, bullets):
+    """ functions that responds to warship collision with aliens """
+    if stats.warships_left > 0:
+        stats.warships_left -= 1
+
+        aliens.empty()
+        bullets.empty()
+
+        warship.center_warship()
+
+        # pause the game to indicate the collision
+        sleep(0.5)
+
+    else:
+        stats.game_active = False
